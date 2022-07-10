@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BINARY SYSTEM</title>
+</head>
+<body>
+    
+    <p>Algorytm zwracający reprezentację liczby w systemie dwójkowym na dziesiętnym
+        nie wykorzystując funkcji partInt 
+        i na odwrót</p>
+
+    <div>
+        <input type="radio" id="binToDec" name="convert" checked>Convert bin to decimal
+        <input type="radio" id="decToBin" name="convert">Convert decimal to bin
+    </div>
+    <input id="number" type="text" placeholder="wpisz wartość" onclick="clearFields()">
+    <button id="myButton" onclick="convert()">ZAMIEŃ</button>
+
+    <p>Wynik:</p>
+    <p id="result"></p>
+
+    <script src="../javascripts/A101_binarysystem.js"></script>
+</body>
+</html>
