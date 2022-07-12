@@ -71,7 +71,8 @@ function convertBinToDec(inputValue)
 {
     // VALIDATE IF BINARY
     if ( !isNaN(parseInt(inputValue,2)))
-    {
+
+    {  
         binaryToDecimal (inputValue)
     }
 
