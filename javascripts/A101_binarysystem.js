@@ -1,88 +1,101 @@
-
+ 
  var  input = document.getElementById('number')
 
-// EVENT PRESS ENTER
-input.addEventListener('keypress', function(event) {
-    
-    if(event.key ==='Enter')
+
+ // EVENT PRESS ENTER
+ input.addEventListener('keyup', function(event) {
+
+    if (event.keyCode!=13)
     {
-        // prevent default settings
-        event.preventDefault()
-        document.getElementById('myButton').click()
+        if (document.getElementById('binToDec').checked)
+        {
+            if ( event.key !='1' &&  event.key !='0' )
+            {
+                var result = document.getElementById('result')
+                result.innerHTML =  "WYBIERZ 0 LUB 1"
+                result.style.color = "red"
+                rem()
+                //return
+            } 
+
+            else
+
+            {
+                convert (input.value)
+            }
+            
+        }
+
+        else if (document.getElementById('decToBin').checked)
+        {
+            if ( event.keyCode <48 || event.keyCode >57 )
+            {
+                var result = document.getElementById('result')
+                result.innerHTML =  "CYFRY 0... 9"
+                result.style.color = "red"
+                rem()
+               // return
+            } 
+
+            else
+
+            {
+                convert (input.value)
+            }
+        }
     }
 
-})
-// CONVERT FUNCTION
-function convert()
-{
-    var  inputValue = document.getElementById('number').value
-
-    if (document.getElementById('binToDec').checked)
-    {
-       convertBinToDec(inputValue) 
+    else {
+            convert (input.value)
     }
+ })
+ 
+ //REMOVE CHAR 
 
-    else if (document.getElementById('decToBin').checked)
-    {
-        convertDecToBin(inputValue) 
-    }
-}
-// CONVERT DECIMAL TO BIN
-function convertDecToBin(inputValue) 
-{
-    // VALIDATE IF BINARY
-    if ( !isNaN(parseInt(inputValue,10)))
-    {
+ function rem()
+ {
+      console.log(document.getElementById('number').value)
+      var x = document.getElementById('number').value
+      document.getElementById('number').value = x.substring(0,x.length-1)
+ }
+ 
+ // CONVERT FUNCTION
+ function convert()
+ {
+     var  inputValue = document.getElementById('number').value
+ 
+     if (document.getElementById('binToDec').checked)
+     {
+        binaryToDecimal(inputValue)
+     }
+ 
+     else if (document.getElementById('decToBin').checked)
+     {
         decimalToBinary (inputValue)
-    }
-
-    else
-    {
-        var result = document.getElementById('result')
-        result.innerHTML =  "NIEPRAWIDŁOWA LICZBA"
-        result.style.color = "red"
-    }
-}
-
-function decimalToBinary (inputValue)
-{
-  
-    if (inputValue==0)
-    {
-        document.getElementById('result').innerHTML =  inputValue +  "=  (0)" + "2".sub()
-        return
-    }
-
-    var quotient = inputValue
-    var binVariable =''
-
-    while (quotient>0)
-    {
-        binVariable = quotient%2 + binVariable
-        quotient = Math.floor(quotient/2)
-        console.log(binVariable + " " + quotient)
-    } 
-
-    document.getElementById('result').innerHTML =  inputValue +  "=  (" + binVariable +  ")" + "2".sub()
-
-}
-// CONVERT BIN TO DECIMAL
-function convertBinToDec(inputValue) 
-{
-    // VALIDATE IF BINARY
-    if ( !isNaN(parseInt(inputValue,2)))
-
-    {  
-        binaryToDecimal (inputValue)
-    }
-
-    else
-    {
-        var result = document.getElementById('result')
-        result.innerHTML =  "NIEPRAWIDŁOWA LICZBA"
-        result.style.color = "red"
-    }
-}
+     }
+ }
+ function decimalToBinary (inputValue)
+ {
+   
+     if (inputValue==0)
+     {
+         document.getElementById('result').innerHTML =  inputValue +  "=  (0)" + "2".sub()
+         return
+     }
+ 
+     var quotient = inputValue
+     var binVariable =''
+ 
+     while (quotient>0)
+     {
+         binVariable = quotient%2 + binVariable
+         quotient = Math.floor(quotient/2)
+         // console.log(binVariable + " " + quotient)
+     } 
+ 
+     document.getElementById('result').innerHTML =  inputValue +  "=  (" + binVariable +  ")" + "2".sub()
+ 
+ }
 //BINARY TO DECIMAL
 function binaryToDecimal (binVariable)
 {
@@ -133,10 +146,11 @@ function binPower (pwr)
     }
  
 }
-// CLEAR INPUT AND RESULT
-function clearFields()
-{
-    document.getElementById('number').value=''
-    document.getElementById('result').innerHTML=''
 
-}
+ // CLEAR INPUT AND RESULT
+ function clearFields()
+ {
+     document.getElementById('number').value=''
+     document.getElementById('result').innerHTML=''
+ 
+ }
