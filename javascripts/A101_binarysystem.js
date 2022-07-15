@@ -1,7 +1,7 @@
  
  var  input = document.getElementById('number')
 
-
+ 
  // EVENT PRESS ENTER
  input.addEventListener('keyup', function(event) {
 
