@@ -1,79 +1,138 @@
-function printSubset ()
-{   
-        // wczytanie wymiaru tablicy z inputboxa i stworzenie tablicy
-        // stworzenie tablicy dynamicznej A do podziorów
-        // zapisanie w trzeciej tablicy wyników ( podzbiorów )
-        // usuwanie i dodawanie elemtnó wg algorytmu
-        // wyświetlenie tablicy3
-        
-        
-        // read fixed dimension
-        var dim = document.getElementById("number").value
+//         // wczytanie wymiaru tablicy z inputboxa i stworzenie tablicy
+//         // stworzenie tablicy dynamicznej A do podziorów
+//         // zapisanie do trzeciej tablicy wyników aktualnego podzbioru A
+//         // usuwanie i dodawanie elemtnów wg algorytmu
+//         // wyświetlenie tablicy3
 
-        // main set 
-        const setArray = new Array(dim)
 
-        for ( var i=0; i< dim ; i++)
-        {
-            setArray[i-1] = i
-        }
+function createSubsets (){
+   
+    // read fixed dimension
+    var dim = document.getElementById("number").value
+         
+    // main set 
+    var  setArray = new Array(dim)
 
-        //temp subset table
-        const subsetTemp  = []
+    fillSetArray(dim,setArray)
+      
+    //temp subset table
+    var subsetTemp  = []
 
-        const subsetsArray =  ["{zbiór pusty}"]
+    //output subsets array
+    var  subsetsArray =  []
 
-        var maxItem = -1
+    subsets(dim,setArray,subsetTemp,subsetsArray)
 
-        for ( var i = 0; i < dim; i++ )
-        {
-            if (maxItem < setArray[i] && subsetTemp.indexOf( setArray[i] ) == -1)
-                
-            {
-                maxItem = setArray[i]
-            }
-        }
-
-        if (maxItem!=-1)
-        {
-            for (var i = 0; i< subsetTemp.length ; i++)
-            {
-                subsetTemp.push(maxItem)
-                
-            }
-
-            for (var i = 0; i< subsetTemp.length ; i++)
-            {
-                if (maxItem<subsetTemp[i])
-                {
-                    subsetTemp.pop(subsetTemp[i])
-                }
-            
-            }
-
-            addRecord()
-        }
-
-        else
-        {
-            for (var i =0; i< subsetsArray.length ; i++)
-            {
-                document.getElementById('result').append('p',subsetsArray[i])
-            }
-        }
+    showResults(subsetsArray)
 }
 
-function addRecord()
+
+//SEARCHING SUBSETS
+function  subsets(dim,setArray,subsetTemp,subsetsArray)      
+
+{
+        var doing  = true
+
+        while (doing)
+
+        {
+            var maxItem = -1
+
+            for ( var i = 0; i < dim; i++ )
+            {
+                if (maxItem < setArray[i] && subsetTemp.indexOf( setArray[i] ) == -1)
+                    
+                {
+                    maxItem = setArray[i]
+                }
+            }
+           
+            console.log('maxitem = ' + maxItem)
+
+            if (maxItem!=-1)
+            {
+            
+                //ADD TO SET A NEW ELEMENT
+                subsetTemp.push(maxItem)
+                  
+
+               //REMOVE ALL GREATER ITEMS  
+               var i = 0  
+               while (i< subsetTemp.length)
+
+               {
+                    if (maxItem<subsetTemp[i])
+                    {
+                        console.log('usunięto ' + subsetTemp[i] + " dł " +  subsetTemp.length )
+                        subsetTemp.splice(i,1)
+                        i=0
+                    }
+                    else
+                    {
+                        i++
+                    }
+               }
+               
+               subsetTemp.sort() 
+               subsetTemp.reverse() 
+               
+                //PASS SUBSET TO RESULTS ARRAY
+                addRecord(subsetTemp,subsetsArray)
+
+            }
+
+            // END OF WHILE
+            else
+            {
+                doing = false
+            }
+        }
+
+   
+}
+
+// SHOWING RESULTS
+function showResults(subsetsArray)
+{
+    const para = document.createElement("p")
+    const node = document.createTextNode(1 + " element " + " \u2205")
+    para.appendChild(node)
+    const element = document.getElementById('result')
+    element.innerText = "liczba elementów: " + (subsetsArray.length + 1)
+    element.appendChild(para)
+
+    for (var k = 0; k<subsetsArray.length ; k++)
+    {
+        const para = document.createElement("p")
+        const node = document.createTextNode(k+2 + " element " + subsetsArray[k])
+        para.appendChild(node)
+        const element = document.getElementById('result')
+        element.appendChild(para)
+    }
+}
+// array results
+function addRecord(subsetTemp,subsetsArray)
 {
     var setItem =''
 
     for (var k = 0; k< subsetTemp.length ;k++)
     {
-        setItem = setItem + ',' + subsetTemp[k]
+        setItem =  subsetTemp[k] + ',' + setItem  
     }
 
+    setItem = setItem.substring(0,setItem.length-1)
     setItem = '{' + setItem + '}'
     subsetsArray.push(setItem)
+}
+
+// FILL SETARRAY
+function fillSetArray(dim, tbl)
+{
+   
+    for (var i = 0; i < dim; i++)    
+    {
+        tbl[i]=i+1
+    }
 }
 
  // CLEAR INPUT AND RESULT
